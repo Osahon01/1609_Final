@@ -35,5 +35,5 @@ def calc_prior_mean(A_t, x_t, u_t, t):
 def calc_prior_cov(P_new):
     pass
 
-c_mean_answer = calc_prior_mean(mat_B, x_initial,u_initial, 8)
+c_mean_answer = calc_prior_mean(mat_B, x_initial,u_initial, 5)
 print("Prior Mean: ", c_mean_answer)
