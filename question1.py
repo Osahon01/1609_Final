@@ -28,11 +28,12 @@ def calc_prior_mean(A_t, x_t, u_t, t):
                            [0, 1, 0, t],
                            [0, 0, 1, 0],
                            [0, 0, 0, 1]])
+        new_u_t = np.array([0,0,0,-g*t])
 
-        return mat_A @ calc_prior_mean(A_t, x_t, u_t, t-1) + mat_B @ u_t
+        return mat_A @ calc_prior_mean(A_t, x_t, new_u_t, t-1) + mat_B @ new_u_t
 
 def calc_prior_cov(P_new):
     pass
 
-c_mean_answer = calc_prior_mean(mat_B, x_initial,u_initial, 5)
+c_mean_answer = calc_prior_mean(mat_B, x_initial,u_initial, 8)
 print("Prior Mean: ", c_mean_answer)
