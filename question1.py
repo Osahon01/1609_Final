@@ -22,7 +22,9 @@ u_t = [[0],
        [-g*delta_t]
        ]
 
-def calc_priors(x_t, u_t, r_t):
+def calc_prior_mean(x_t, u_t, r_t):
     pass
 
+def calc_prior_cov(P_new):
+    pass
 print("asnwer")
