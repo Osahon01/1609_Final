@@ -75,3 +75,15 @@ plt.show()
 
 print("Probability that the projectile has landed by time 20:", prob_landed)
 print(mean_x2)
+
+
+#Part B#
+t_vals = [5,10,15,20,25,30,35,40]
+def getting_probs_for_tvals(t):
+    x_2_mean = calc_prior_mean(mat_B, x_initial, u_initial, t)[1]
+    x_2_var = calc_prior_cov(mat_B,P_initial,Q,t)[1][1]
+    x_2 = norm_x2 = scipy.stats.norm(x_2_mean, x_2_var)
+    return x_2.cdf(0)
+
+probs = [getting_probs_for_tvals(t) for t in t_vals]
+print(probs)
