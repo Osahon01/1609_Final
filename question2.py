@@ -1,4 +1,7 @@
 import numpy as np
+import scipy.stats as sci
+import scipy.integrate as integrate
+
 g = 9.8
 mat_B = np.eye(4)
 mat_C = np.array([[1, 0, 0, 0],
@@ -44,6 +47,16 @@ def calc_prior_cov(A_t, P_t, Q, t):
         return (mat_A @ P_new @ mat_A.T) + Q
 
 t_chosen = 20
-print("Prior Mean: ", calc_prior_mean(mat_B, x_initial,u_initial, t_chosen) )
-print("Covariance matrix for 20|0", calc_prior_cov(mat_B, P_initial, Q,t_chosen))
+mean = calc_prior_mean(mat_B, x_initial,u_initial, t_chosen) 
+# print("Prior Mean: ", mean)
+
+Cov = calc_prior_cov(mat_B, P_initial, Q,t_chosen)
+# print("Covariance matrix for 20|0", Cov)
+
+Cov20 = np.array([[Cov[0][0:2]], [Cov[1][0:2]]])
+print(Cov20)
+norm = sci.norm(mean[0], Cov20)
+integrate.cumtrapz(norm, initial = float('inf'))
+
+
     
