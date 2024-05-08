@@ -53,20 +53,32 @@ t_chosen = 20
 mean = calc_prior_mean(mat_B, x_initial, u_initial, t_chosen) 
 Cov = calc_prior_cov(mat_B, P_initial, Q, t_chosen)
 
-mean_2 = mean[0:2]
-Cov_2 = Cov[0:2, 0:2]
+# Extract the submatrix for the first two elements of mean and covariance
+mean_2 = mean[0]
+Cov_2 = Cov[0][-1]  # Fix: Extract the last element of the first row of Cov
+print(Cov_2)
 
-norm = scipy.stats.multivariate_normal(mean=mean_2, cov=Cov_2)
-
-x = np.linspace(-10, 10, num=20)  
-pdf_values = norm.pdf(x.reshape(-1, 1))  
+norm = scipy.stats.multivariate_normal(mean=mean_2, cov=Cov_2) 
+x = np.linspace(-1, 19, num=20)  # Test
+pdf_values = norm.pdf(x)
 integral = integrate.cumtrapz(pdf_values, x, initial=float('inf'))
 print(integral)
 
-plt.plot(x, integral, label='Integral')
+plt.figure(figsize=(10, 5))
+plt.subplot(2, 1, 1)
+plt.plot(x, pdf_values, label='PDF')
 plt.xlabel('x')
-plt.ylabel('Integral Value')
-plt.title('Integral of PDF')
-plt.legend()
+plt.ylabel('Probability Density')
+plt.title('Probability Density Function (PDF)')
 plt.grid(True)
+plt.legend()
+
+# plt.subplot(2, 1, 2)
+# plt.plot(x, integral, label='Integral')
+# plt.fill_between(x[:-1], integral, alpha=0.3)
+# plt.xlabel('x')
+# plt.ylabel('Integrated Probability')
+# plt.title('Visual Integration of PDF')
+# plt.grid(True)
+# plt.legend()
 plt.show()
