@@ -1,6 +1,9 @@
 import numpy as np
+import scipy
 import scipy.stats as sci
 import scipy.integrate as integrate
+import matplotlib.pyplot as plt
+
 
 g = 9.8
 mat_B = np.eye(4)
@@ -47,16 +50,23 @@ def calc_prior_cov(A_t, P_t, Q, t):
         return (mat_A @ P_new @ mat_A.T) + Q
 
 t_chosen = 20
-mean = calc_prior_mean(mat_B, x_initial,u_initial, t_chosen) 
-# print("Prior Mean: ", mean)
+mean = calc_prior_mean(mat_B, x_initial, u_initial, t_chosen) 
+Cov = calc_prior_cov(mat_B, P_initial, Q, t_chosen)
 
-Cov = calc_prior_cov(mat_B, P_initial, Q,t_chosen)
-# print("Covariance matrix for 20|0", Cov)
+mean_2 = mean[0:2]
+Cov_2 = Cov[0:2, 0:2]
 
-Cov20 = np.array([[Cov[0][0:2]], [Cov[1][0:2]]])
-print(Cov20)
-norm = sci.norm(mean[0], Cov20)
-integrate.cumtrapz(norm, initial = float('inf'))
+norm = scipy.stats.multivariate_normal(mean=mean_2, cov=Cov_2)
 
+x = np.linspace(-10, 10, num=20)  
+pdf_values = norm.pdf(x.reshape(-1, 1))  
+integral = integrate.cumtrapz(pdf_values, x, initial=float('inf'))
+print(integral)
 
-    
+plt.plot(x, integral, label='Integral')
+plt.xlabel('x')
+plt.ylabel('Integral Value')
+plt.title('Integral of PDF')
+plt.legend()
+plt.grid(True)
+plt.show()
