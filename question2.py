@@ -78,12 +78,28 @@ print(mean_x2)
 
 
 #Part B#
-t_vals = [5,10,15,20,25,30,35,40]
-def getting_probs_for_tvals(t):
-    x_2_mean = calc_prior_mean(mat_B, x_initial, u_initial, t)[1]
-    x_2_var = calc_prior_cov(mat_B,P_initial,Q,t)[1][1]
-    x_2 = norm_x2 = scipy.stats.norm(x_2_mean, x_2_var)
-    return x_2.cdf(0)
+t_vals = [2,4,6,8,10,12,14,16,18,20,22,24,26]
+def prob_landed_by_t(t):
+    x2_mean = calc_prior_mean(mat_B, x_initial, u_initial, t)[1]
+    x2_var = calc_prior_cov(mat_B, P_initial, Q, t)[1][1]
+    norm_x2 = scipy.stats.norm(x2_mean, x2_var)
+    return norm_x2.cdf(0)
 
-probs = [getting_probs_for_tvals(t) for t in t_vals]
-print(probs)
+# Calculate the CDF values for each t in t_vals
+cdf_vals = [prob_landed_by_t(t) for t in t_vals]
+
+# Compute the PMF of Tland using the differences in CDF values
+pmf_vals = [cdf_vals[0]] + [cdf_vals[i] - cdf_vals[i - 1] for i in range(1, len(cdf_vals))]
+
+# Print the PMF values
+print("PMF of Tland:", pmf_vals)
+
+plt.figure()
+plt.bar(t_vals, pmf_vals, width=0.5, align='center', alpha=0.7)
+plt.xlabel('Time')
+plt.ylabel('Probability')
+plt.title('PMF of Landing Time')
+plt.xticks(t_vals)
+plt.grid(axis='y', alpha=0.75)
+plt.show()
+
