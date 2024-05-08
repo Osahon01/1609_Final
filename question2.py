@@ -50,31 +50,28 @@ def calc_prior_cov(A_t, P_t, Q, t):
         return (mat_A @ P_new @ mat_A.T) + Q
 
 t_chosen = 20
-mean = calc_prior_mean(mat_B, x_initial, u_initial, t_chosen) 
-Cov = calc_prior_cov(mat_B, P_initial, Q, t_chosen)
+# plt.show()
 
-mean_2 = mean[0]
-Cov_2 = Cov[1][1]  
-print(mean, Cov_2)
+# Define the normal distribution for x2 at time t = 20
+mean_x2 = calc_prior_mean(mat_B, x_initial, u_initial, t_chosen)[1]  # Mean of x2 at time t = 20
+cov_x2 = calc_prior_cov(mat_B, P_initial, Q, t_chosen)[1][1]  # Covariance of x2 at time t = 20
+norm_x2 = scipy.stats.norm(mean_x2, cov_x2)
 
-norm = scipy.stats.norm(mean_2, Cov_2) 
-x = np.linspace(-9999999, 9999999)  # Test
-pdf_values = norm.pdf(x)
-integral = integrate.cumtrapz(pdf_values, x, initial=float('inf'))
-# print(integral)
+# Calculate the cumulative distribution function (CDF) at t = 20
+prob_landed = norm_x2.cdf(0)  # Probability that x2 <= 0 at t = 20
+
+# Plot the PDF of x2 at time t = 20
+x_values = np.linspace(mean_x2 - 1000, mean_x2 + 1000, 100)
+pdf_values_x2 = norm_x2.pdf(x_values)
 
 plt.figure()
-plt.plot(x, pdf_values, label='PDF')
-plt.xlabel('x')
+plt.plot(x_values, pdf_values_x2, label='PDF of x2 at t = 20')
+plt.xlabel('x2')
 plt.ylabel('Probability Density')
-plt.title('PDF')
+plt.title('PDF of x2 at t = 20')
 plt.legend()
-
-plt.figure()
-plt.plot(x, integral, label='Integral')
-plt.fill_between(x, integral, alpha=0.3)
-plt.xlabel('x')
-plt.ylabel('Integrated Probability')
-plt.title('Visual PDF')
-plt.legend()
+plt.grid(True)
 plt.show()
+
+print("Probability that the projectile has landed by time 20:", prob_landed)
+print(mean_x2)
