@@ -54,16 +54,15 @@ def calc_prior_cov(A_t, P_t, Q, t):
 mean_5 = calc_prior_mean(mat_B, x_initial, u_initial, 5)
 cov_5 = calc_prior_cov(mat_B, P_initial, Q, 5)
 
+print("Prior Mean: ", mean_5)
+print("Covariance matrix for 5|0", cov_5)  # print statements to answer 1d
+
 
 def plot_confidence_ellipses_d():
     alphas = [0.9, 0.95]
     colors = ['red', 'blue']
     for interval, color in zip(alphas, colors):
         confidence_ellipse(mean_5, cov_5, interval, color)
-
-
-print("Prior Mean: ", mean_5)
-print("Covariance matrix for 5|0", cov_5)
 
 
 def plot_confidence_ellipses_e():
