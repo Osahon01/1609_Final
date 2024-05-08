@@ -45,5 +45,5 @@ def calc_prior_cov(A_t, P_t, Q, t):
 
 t_chosen = 20
 print("Prior Mean: ", calc_prior_mean(mat_B, x_initial,u_initial, t_chosen) )
-print("Covariance matrix for 5|5", calc_prior_cov(mat_B, P_initial, Q,t_chosen))
+print("Covariance matrix for 20|0", calc_prior_cov(mat_B, P_initial, Q,t_chosen))
     

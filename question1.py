@@ -47,4 +47,4 @@ def calc_prior_cov(A_t, P_t, Q, t):
         return (mat_A @ P_new @ mat_A.T) + Q
     
 print("Prior Mean: ", calc_prior_mean(mat_B, x_initial,u_initial, 5) )
-print("Covariance matrix for 5|5", calc_prior_cov(mat_B, P_initial, Q,5))
+print("Covariance matrix for 5|0", calc_prior_cov(mat_B, P_initial, Q,5))
