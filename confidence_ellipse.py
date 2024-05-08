@@ -3,7 +3,6 @@ from scipy.stats.distributions import chi2
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-from question1 import mean, cov
 
 
 def nicegrid(ax):  # Shoutout nice grid function
@@ -54,17 +53,18 @@ def confidence_ellipse(mu, Sigma, alpha, color):
     plt.plot(x, y, color)
 
 
-alphas = [0.90, 0.95]
-colors = ['red', 'blue']
+# alphas = [0.90, 0.95]
+# colors = ['red', 'blue']
 
-for interval, color in zip(alphas, colors):
-    confidence_ellipse(mean, cov, interval, color)
+# for interval, color in zip(alphas, colors):
+#     confidence_ellipse(mean_5, cov_5, interval, color)
 
-plt.gca().set_aspect('equal', adjustable='box')
-plt.xlabel('Horizontals Label')
-plt.ylabel('Vertical Position')
-plt.title('Confidence Ellipses')
-nicegrid(plt.gca())
-plt.legend([f'{alpha*100}% Confidence Ellipse' for alpha in alphas])
-plt.savefig('confidence_ellipses.png')
-plt.show()
+# plt.gca().set_aspect('equal', adjustable='box')
+# plt.xlabel('Horizontal Position (m)')
+# plt.ylabel('Vertical Position (m)')
+# plt.title('Confidence Ellipses for Var. $\\alpha$ at ')
+# nicegrid(plt.gca())
+# plt.legend(
+#     [f'{alpha*100}% Confidence Ellipse' for alpha in alphas])
+# plt.savefig('confidence_ellipses.png')
+# plt.show()
