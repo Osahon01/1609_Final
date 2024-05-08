@@ -1,22 +1,22 @@
 import numpy as np
 
-#Part C#
+# Part C#
 
 g = 9.8
 mat_B = np.eye(4)
 mat_C = np.array([[1, 0, 0, 0],
-         [0, 1, 0, 0]
-         ])
+                  [0, 1, 0, 0]
+                  ])
 
-       
-x_initial = np.array([0, 0, 100, 100]).T 
-u_initial = np.array([0,0,0,0]).T
+
+x_initial = np.array([0, 0, 100, 100]).T
+u_initial = np.array([0, 0, 0, 0]).T
 
 P_initial = np.array([[0, 0, 0, 0],
-         [0, 0, 0, 0],
-         [0, 0, 25, 5],
-         [0, 0, 5, 25]
-         ])
+                      [0, 0, 0, 0],
+                      [0, 0, 25, 5],
+                      [0, 0, 5, 25]
+                      ])
 
 
 def calc_prior_mean(A_t, x_t, u_t, t):
@@ -25,26 +25,33 @@ def calc_prior_mean(A_t, x_t, u_t, t):
 
     else:
         mat_A = np.array([[1, 0, t, 0],
-                           [0, 1, 0, t],
-                           [0, 0, 1, 0],
-                           [0, 0, 0, 1]])
-        new_u_t = np.array([0,0,0,-g*t])
+                          [0, 1, 0, t],
+                          [0, 0, 1, 0],
+                          [0, 0, 0, 1]])
+        new_u_t = np.array([0, 0, 0, -g*t])
 
         return mat_A @ calc_prior_mean(A_t, x_t, new_u_t, t-1) + mat_B @ new_u_t
-    
+
+
 Q = np.eye(4)
+
+
 def calc_prior_cov(A_t, P_t, Q, t):
     if t == 0:
         return (A_t @ P_t @ A_t.T) + Q
 
     else:
         mat_A = np.array([[1, 0, t, 0],
-                           [0, 1, 0, t],
-                           [0, 0, 1, 0],
-                           [0, 0, 0, 1]])
+                          [0, 1, 0, t],
+                          [0, 0, 1, 0],
+                          [0, 0, 0, 1]])
 
         P_new = calc_prior_cov(mat_A, P_t, Q, t-1)
         return (mat_A @ P_new @ mat_A.T) + Q
-    
-print("Prior Mean: ", calc_prior_mean(mat_B, x_initial,u_initial, 5) )
-print("Covariance matrix for 5|0", calc_prior_cov(mat_B, P_initial, Q,5))
+
+
+mean = calc_prior_mean(mat_B, x_initial, u_initial, 5)
+cov = calc_prior_cov(mat_B, P_initial, Q, 5)
+
+print("Prior Mean: ", mean)
+print("Covariance matrix for 5|0", cov)
