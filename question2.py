@@ -78,7 +78,7 @@ print(mean_x2)
 
 
 #Part B#
-t_vals = [2,4,6,8,10,12,14,16,18,20,22,24,26]
+t_vals = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
 def prob_landed_by_t(t):
     x2_mean = calc_prior_mean(mat_B, x_initial, u_initial, t)[1]
     x2_var = calc_prior_cov(mat_B, P_initial, Q, t)[1][1]
@@ -89,10 +89,12 @@ def prob_landed_by_t(t):
 cdf_vals = [prob_landed_by_t(t) for t in t_vals]
 
 # Compute the PMF of Tland using the differences in CDF values
-pmf_vals = [cdf_vals[0]] + [cdf_vals[i] - cdf_vals[i - 1] for i in range(1, len(cdf_vals))]
+pmf_vals = [cdf_vals[0]] + [max(0, cdf_vals[i] - cdf_vals[i - 1]) for i in range(1, len(cdf_vals))]
 
 # Print the PMF values
+print("CDF of Tland:", cdf_vals)
 print("PMF of Tland:", pmf_vals)
+
 
 plt.figure()
 plt.bar(t_vals, pmf_vals, width=0.5, align='center', alpha=0.7)
@@ -102,4 +104,5 @@ plt.title('PMF of Landing Time')
 plt.xticks(t_vals)
 plt.grid(axis='y', alpha=0.75)
 plt.show()
+
 
