@@ -82,8 +82,9 @@ t_vals = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,2
 def prob_landed_by_t(t):
     x2_mean = calc_prior_mean(mat_B, x_initial, u_initial, t)[1]
     x2_var = calc_prior_cov(mat_B, P_initial, Q, t)[1][1]
-    norm_x2 = scipy.stats.norm(x2_mean, x2_var)
+    norm_x2 = scipy.stats.norm(x2_mean, x2_var**(1/2))
     return norm_x2.cdf(0)
+
 
 # Calculate the CDF values for each t in t_vals
 cdf_vals = [prob_landed_by_t(t) for t in t_vals]
