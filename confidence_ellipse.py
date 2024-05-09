@@ -10,12 +10,6 @@ def nicegrid(ax):  # Shoutout nice grid function
     ax.grid(True, which='minor', color='#999999', linestyle=':', alpha=0.2)
     ax.minorticks_on()
 
-# inputs:
-# mu    = mean vector
-# Sigma = covariance matrix
-# alpha = level
-# color = plot color
-
 
 def confidence_ellipse(mu, Sigma, alpha, color):
 
@@ -51,20 +45,3 @@ def confidence_ellipse(mu, Sigma, alpha, color):
         np.sqrt(lambda2*z)*np.sin(theta)*np.cos(theta0)
 
     plt.plot(x, y, color)
-
-
-# alphas = [0.90, 0.95]
-# colors = ['red', 'blue']
-
-# for interval, color in zip(alphas, colors):
-#     confidence_ellipse(mean_5, cov_5, interval, color)
-
-# plt.gca().set_aspect('equal', adjustable='box')
-# plt.xlabel('Horizontal Position (m)')
-# plt.ylabel('Vertical Position (m)')
-# plt.title('Confidence Ellipses for Var. $\\alpha$ at ')
-# nicegrid(plt.gca())
-# plt.legend(
-#     [f'{alpha*100}% Confidence Ellipse' for alpha in alphas])
-# plt.savefig('confidence_ellipses.png')
-# plt.show()

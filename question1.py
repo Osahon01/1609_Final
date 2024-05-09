@@ -79,15 +79,13 @@ plt.figure(figsize=(8, 6))
 plt.xlabel('Horizontal Position (m)')
 plt.ylabel('Vertical Position (m)')
 plt.title('Confidence Ellipse(s) for $\\alpha$ and $t$')
-plt.gca().set_aspect('equal', adjustable='box')
 nicegrid(plt.gca())
 
 plot_confidence_ellipses_d()
 plt.legend(['90% Confidence Ellipse (t=5)', '95% Confidence Ellipse (t=5)'])
+plt.gca().set_aspect('equal', adjustable='box')
+plt.savefig('answer_1d.svg', format='svg', bbox_inches='tight')
 plt.show()
-
-plt.savefig('answer_1d.svg', format='svg')
-
 
 plt.xlabel('Horizontal Position (m)')
 plt.ylabel('Vertical Position (m)')
@@ -95,5 +93,5 @@ plt.title('Confidence Ellipse(s) for $\\alpha$ and $t$')
 nicegrid(plt.gca())
 plot_confidence_ellipses_e()
 plt.legend(['90% Confidence Ellipse (t=10)', '90% Confidence Ellipse (t=15)'])
+plt.savefig('answer_1e.svg', format='svg', bbox_inches='tight')
 plt.show()
-plt.savefig('answer_1e.svg', format='svg')  # Save the plot for part e
