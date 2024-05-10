@@ -107,7 +107,7 @@ plt.title('PMF of Landing Time')
 plt.xticks(t_vals)
 # plt.grid(axis='y', alpha=0.75)
 nicegrid(plt.gca())
-plt.savefig('answer_2c.svg', format='svg', bbox_inches='tight')
+plt.savefig('answer_2b.svg', format='svg', bbox_inches='tight')
 plt.show()
 
 
