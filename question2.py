@@ -77,7 +77,7 @@ print(x2_mean)
 
 
 #Part B
-t_vals = [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+t_vals = [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
 
 
 def prob_landed_by_t(t):
@@ -95,8 +95,8 @@ pmf_vals = [cdf_vals[0]] + [max(0, cdf_vals[i] - cdf_vals[i - 1])
                             for i in range(1, len(cdf_vals))]
 
 # Print the PMF values
-print("CDF of Tland:", cdf_vals)
-print("PMF of Tland:", pmf_vals)
+# print("CDF of Tland:", cdf_vals)
+# print("PMF of Tland:", pmf_vals)
 
 
 plt.figure()
@@ -107,6 +107,7 @@ plt.title('PMF of Landing Time')
 plt.xticks(t_vals)
 # plt.grid(axis='y', alpha=0.75)
 nicegrid(plt.gca())
+plt.savefig('answer_2c.svg', format='svg', bbox_inches='tight')
 plt.show()
 
 
