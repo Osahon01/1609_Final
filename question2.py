@@ -45,22 +45,22 @@ def calc_prior_cov(P_t, t):
         P_new = calc_prior_cov(P_t, t-1)
         return (mat_A @ P_new @ mat_A.T) + Q
 
+#Part A
 
 t_chosen = 20
-# plt.show()
+mean_x1x2 = calc_prior_mean(x_initial, t_chosen)
+cov_x1x2 = calc_prior_cov(P_initial,t_chosen)
 
 # Define the normal distribution for x2 at time t = 20
-mean_x2 = calc_prior_mean(x_initial, t_chosen)[
-    1]  # Mean of x2 at time t = 20
-cov_x2 = calc_prior_cov(P_initial, t_chosen)[
-    1][1]  # Covariance of x2 at time t = 20
-norm_x2 = scipy.stats.norm(mean_x2, cov_x2)
+x2_mean = mean_x1x2[1]  # Mean of x2 at time t = 20
+x2_var = cov_x1x2[1][1]  # Variance of x2 at time t = 20
+norm_x2 = scipy.stats.norm(x2_mean, x2_var**(1/2))
 
 # Calculate the cumulative distribution function (CDF) at t = 20
 prob_landed = norm_x2.cdf(0)  # Probability that x2 <= 0 at t = 20
 
 # Plot the PDF of x2 at time t = 20
-x_values = np.linspace(mean_x2 - 1000, mean_x2 + 1000, 100)
+x_values = np.linspace(x2_mean - 1000, x2_mean + 1000, 100)
 pdf_values_x2 = norm_x2.pdf(x_values)
 
 plt.figure()
@@ -73,10 +73,10 @@ plt.grid(True)
 plt.show()
 
 print("Probability that the projectile has landed by time 20:", prob_landed)
-print(mean_x2)
+print(x2_mean)
 
 
-# Part B#
+#Part B
 t_vals = [16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
 
 
@@ -108,3 +108,13 @@ plt.xticks(t_vals)
 # plt.grid(axis='y', alpha=0.75)
 nicegrid(plt.gca())
 plt.show()
+
+
+#Part C
+x1_mean = mean_x1x2[0]
+x1_var = cov_x1x2[0][0]
+x1x2_corr = cov_x1x2[0][1]/ (x1_var*x2_var)**(1/2)
+c_mean_ans = x1_mean+(x1_var/x2_var)**(1/2)*x1x2_corr*-x2_mean
+c_var_ans = (1-x1x2_corr**2)*x1_var
+print("Mean Answer for Part C: ", c_mean_ans)
+print("Var Answer to Part C: ", c_var_ans)
