@@ -96,7 +96,23 @@ print("Updated State(x_t+1|t+1): ", final_xhat)
 print("Updated Covariance(P_t+1|t+1): ", final_P)
 
 #Part D
+def calc_prior_mean(x_t, t):
+    if t == 10:
+        return mat_A @ x_t + mat_B @ u_t
+    else:
+        return mat_A @ calc_prior_mean(x_t, t-1) + mat_B @ u_t
 
+def calc_prior_cov(P_t, t):
+    if t == 10:
+        return (mat_A @ P_t @ mat_A.T) + Q
 
+    else:
+        P_new = calc_prior_cov(P_t, t-1)
+        return (mat_A @ P_new @ mat_A.T) + Q
+    
+landing_mean = calc_prior_mean(final_xhat, 20)
+landing_cov = calc_prior_cov(final_P, 20)
+print(f"{landing_mean=}")
+print(f"{landing_cov=}")
 
 
