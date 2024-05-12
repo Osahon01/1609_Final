@@ -55,6 +55,7 @@ plt.ylabel('x_2')
 plt.title('Projectile Trajectory')
 plt.legend()
 plt.grid(True)
+plt.savefig('answer_3a.svg', format='svg', bbox_inches='tight')
 plt.show()
 
 
@@ -69,6 +70,7 @@ plt.ylabel('x_2')
 plt.title('Radar Observations')
 plt.legend()
 plt.grid(True)
+plt.savefig('answer_3b.svg', format='svg', bbox_inches='tight')
 plt.show()
 
 
