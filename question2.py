@@ -125,6 +125,9 @@ mixture = []
 mixture_means = []
 mixture_vars = []
 
+x_values = np.linspace(x2_mean - 5000, x2_mean + 5000, 1000)
+X_land_pdf = np.zeros(len(x_values))
+
 for t in range(len(t_vals)):
     mean_x1x2 = calc_prior_mean(x_initial, t_vals[t])
     cov_x1x2 = calc_prior_cov(P_initial, t_vals[t])
@@ -138,17 +141,10 @@ for t in range(len(t_vals)):
     mixture_means.append(c_mean_ans)
     mixture_vars.append(c_var_ans)
 
-X_land_pdf = np.zeros_like(x_values)
-
-for i in range(len(t_vals)):
-    norm_pdf = scipy.stats.norm(mixture_means[i], np.sqrt(mixture_vars[i])).pdf(x_values)
-    X_land_pdf += norm_pdf * pmf_vals[i]
-
-mean_X_land = np.sum(np.array(mixture_means) * np.array(pmf_vals))
-var_X_land = np.sum((np.array(mixture_vars) + np.array(mixture_means)**2) * np.array(pmf_vals)) - mean_X_land**2
-
-print("Mean for X_land:", mean_X_land)
-print("Variance for X_land:", var_X_land)
+    #pdf analysis below
+    norm_pdf = scipy.stats.norm(c_mean_ans, np.sqrt(c_var_ans)).pdf(x_values)
+    array_with_scalar = np.full(len(norm_pdf), pmf_vals[t])
+    X_land_pdf += norm_pdf * array_with_scalar
 
 plt.figure()
 plt.plot(x_values, X_land_pdf, label='PDF of X_land')
